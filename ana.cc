@@ -65,17 +65,15 @@ int main(int argc, char *argv[]) {
   while ( getline(inFile, line) ) {
     nl++;
     if ( nl == 0 ) continue;
-    cout << line << endl;
+    //cout << line << endl;
+    outFile << "Case #" << nl << ": ";
     int prev_ki = -1;
     for(string::size_type i = 0; i < line.size(); ++i) {
       std::pair<int,int> ipair = getIndexes(line[i]);  // index pair
-      if ( prev_ki == ipair.first ) cout << " ";
-      for ( int n = 0; n < ipair.second; ++n ) cout << ipair.first;
+      if ( prev_ki == ipair.first ) outFile << " ";
+      for ( int n = 0; n < ipair.second; ++n ) outFile << ipair.first;
       prev_ki = ipair.first;
     }
-    cout << endl;
-    outFile << "Case #" << nl << ":";
-    // --> generate correct output
     outFile << endl;
   }
   inFile.close();
