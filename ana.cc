@@ -35,14 +35,22 @@ struct Pad {
       cout << endl;
     }
   }
-};
+} p;
+
+std::pair<int,int> getIndexes(const char& c) {
+  for ( int i = 0; i < p.vk.size(); ++i ) {  // key index
+    for ( int j = 0; j < p.vk[i].size(); ++j ) {  // character index
+      if ( p.vk[i][j] != c ) continue;
+      return std::make_pair(i+2,j+1);
+    }
+  }
+  return std::make_pair(0,1);
+}
 
 int main(int argc, char *argv[]) {
 
-  Pad p;
   p.init();
   p.print();
-  return 0;
 
   if ( argc < 1 ) return 1;
 
@@ -58,7 +66,11 @@ int main(int argc, char *argv[]) {
     nl++;
     if ( nl == 0 ) continue;
     cout << line << endl;
-    // --> do something with line (stringstream etc.)
+    for(string::size_type i = 0; i < line.size(); ++i) {
+      std::pair<int,int> ipair = getIndexes(line[i]);  // index pair
+      cout << " " << ipair.first << "." << ipair.second;
+    }
+    cout << endl;
     outFile << "Case #" << nl << ":";
     // --> generate correct output
     outFile << endl;
