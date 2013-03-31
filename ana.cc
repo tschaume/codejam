@@ -50,7 +50,7 @@ std::pair<int,int> getIndexes(const char& c) {
 int main(int argc, char *argv[]) {
 
   p.init();
-  p.print();
+  //p.print();
 
   if ( argc < 1 ) return 1;
 
@@ -66,9 +66,12 @@ int main(int argc, char *argv[]) {
     nl++;
     if ( nl == 0 ) continue;
     cout << line << endl;
+    int prev_ki = -1;
     for(string::size_type i = 0; i < line.size(); ++i) {
       std::pair<int,int> ipair = getIndexes(line[i]);  // index pair
-      cout << " " << ipair.first << "." << ipair.second;
+      if ( prev_ki == ipair.first ) cout << " ";
+      for ( int n = 0; n < ipair.second; ++n ) cout << ipair.first;
+      prev_ki = ipair.first;
     }
     cout << endl;
     outFile << "Case #" << nl << ":";
