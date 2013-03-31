@@ -17,7 +17,10 @@ int main(int argc, char *argv[]) {
   std::ifstream inFile;
   inFile.open(argv[1]);
   string line;
+  int nl = -1;
   while ( getline(inFile, line) ) {
+    nl++;
+    if ( nl == 0 ) continue;
     cout << line << endl;
   }
   inFile.close();
