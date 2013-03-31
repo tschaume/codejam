@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
   int nl = -1;
   string line;
   while ( getline(inFile, line) ) {
-    cout << line << endl;
+    //cout << line << endl;
     nl++;
     if ( nl == 0 ) {  // special case: first line
       fin.N = atoi(line.c_str());
@@ -71,8 +71,35 @@ int main(int argc, char *argv[]) {
     }
   }
   inFile.close();
-  cout << "number of lines = " << nl << endl;
   fin.print();
 
+  // analysis
+  //----------
+
+  std::ofstream outFile;
+  string fnout = argv[1];
+  fnout += ".out";
+  outFile.open(fnout.c_str());
+  bool done;  // flag to abort if match found
+  for (int c = 0; c < fin.N; ++c) {  // loop cases
+    int NrItems = fin.vtc[c].I;
+    done = false;
+    for (int i = 0; i < NrItems; ++i) {  // loop prices
+      int cr = fin.vtc[c].C;  // credit
+      int p1 = fin.vtc[c].vp[i];  // first price
+      if ( p1 > cr ) continue;  // not enough credit
+      for (int j = i+1; j < NrItems; ++j) {
+        int p2 = fin.vtc[c].vp[j];  // second price
+        if ( p2 > cr ) continue;  // not enough credit
+        if ( p1+p2 != cr ) continue;  // prices don't match
+        done = true;  // matching prices found
+        outFile << "Case #" << c+1 << ": " << i+1 << " " << j+1 << endl;
+        break;
+      }
+      if ( done ) break;  // solution is unique
+    }
+  }
+  outFile.close();
+  
   return 0;
 }
