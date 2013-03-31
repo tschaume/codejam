@@ -35,7 +35,6 @@ struct InputFile {
   }
 };
 
-// TODO: use fin.N to check #cases in input file
 // TODO: check read-in variables and its limits
 int main(int argc, char *argv[]) {
 
@@ -71,6 +70,10 @@ int main(int argc, char *argv[]) {
     }
   }
   inFile.close();
+  cout << "nl = " << nl << "  fin.N = " << fin.N << endl;
+  if ( nl%3 != 0 || fin.N != nl/3 ) {
+    cout << "input corrupt: wrong number of cases" << endl;
+  }
   fin.print();
 
   // analysis
