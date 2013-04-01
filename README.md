@@ -21,7 +21,7 @@ each test case there will be:
 
 ### Output
 
-For each test case, output one line containing "Case #x: " followed by the
+For each test case, output one line containing `Case #x: ` followed by the
 indices of the two items whose price adds up to the store credit. The lower
 index should be output first.
 
