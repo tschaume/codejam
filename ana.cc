@@ -23,8 +23,6 @@ struct TestCase {
   void clear() { v1.clear(); v2.clear(); }
 } tc;
 
-typedef vector<TestCase> Data;
-
 int main(int argc, char *argv[]) {
 
   if ( argc < 1 ) return 1;
@@ -37,11 +35,10 @@ int main(int argc, char *argv[]) {
   outFile.open(fn.c_str());
   string line;
   int nl = -1;
-  Data d;
   while ( getline(inFile, line) ) {
     nl++;
     if ( nl == 0 ) continue;
-    cout << line << endl;
+    //cout << line << endl;
     if ( nl % 3 == 1 ) {
       tc.clear();
       continue;
@@ -52,18 +49,22 @@ int main(int argc, char *argv[]) {
       if ( nl % 3 == 2 ) tc.v1.push_back(atoi(buf.c_str()));
       if ( nl % 3 == 0 ) tc.v2.push_back(atoi(buf.c_str()));
     }
-    if ( nl % 3 == 0 ) d.push_back(tc);
-    outFile << "Case #" << nl << ":";
-    // --> generate correct output
-    outFile << endl;
+    if ( nl % 3 == 0 ) {
+      //tc.print();
+      // sort first vector ascending
+      std::sort(tc.v1.begin(), tc.v1.end());
+      // sort first vector descending
+      std::sort(tc.v2.begin(), tc.v2.end(), std::greater<int>());
+      // calc scalar product
+      int result = 0;
+      for ( int j = 0; j < tc.v1.size(); ++j ) {
+        result += tc.v1[j] * tc.v2[j];
+      }
+      outFile << "Case #" << nl << ": " << result << endl;
+    }
   }
   inFile.close();
   outFile.close();
-
-  for ( int i = 0; i < d.size(); ++i ) {
-    cout << "i = " << i << endl;
-    d[i].print();
-  } 
 
   return 0;
 }
