@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
       for ( int j = 0; j < tc.v1.size(); ++j ) {
         result += tc.v1[j] * tc.v2[j];
       }
-      outFile << "Case #" << nl << ": " << result << endl;
+      outFile << "Case #" << nl/3 << ": " << result << endl;
     }
   }
   inFile.close();
