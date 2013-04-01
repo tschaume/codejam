@@ -15,8 +15,8 @@ each test case there will be:
 
 - One line containing the value C, the amount of credit you have at the store.  
 - One line containing the value I, the number of items in the store.  
-- One line containing a space separated list of I integers. Each integer P
-indicates the price of an item in the store.  
+- One line containing a space separated list of I integers.  
+  Each integer P indicates the price of an item in the store.  
 - Each test case will have exactly one solution.
 
 ### Output
