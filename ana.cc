@@ -12,9 +12,9 @@ using std::cout;
 using std::endl;
 
 struct TestCase {
-  vector<int> v1;
-  vector<int> v2;
-  void printV(const vector<int>& v) {
+  vector<long> v1;
+  vector<long> v2;
+  void printV(const vector<long>& v) {
     cout << "v = ";
     for ( int i = 0; i < v.size(); ++i ) cout << " " << v[i];
     cout << endl;
@@ -54,9 +54,9 @@ int main(int argc, char *argv[]) {
       // sort first vector ascending
       std::sort(tc.v1.begin(), tc.v1.end());
       // sort first vector descending
-      std::sort(tc.v2.begin(), tc.v2.end(), std::greater<int>());
+      std::sort(tc.v2.begin(), tc.v2.end(), std::greater<long>());
       // calc scalar product
-      int result = 0;
+      long result = 0;
       for ( int j = 0; j < tc.v1.size(); ++j ) {
         result += tc.v1[j] * tc.v2[j];
       }
