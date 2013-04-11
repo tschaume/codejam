@@ -12,6 +12,11 @@ std::ifstream inFile;
 std::ofstream outFile;
 const bool verbose = false;
 
+void progress(const int& n) {
+  if ( !(n%100) ) cout << "." << flush;
+  if ( !(n%1000) ) cout << " " << n/1000 << "k" << endl;
+}
+
 void initIO(const char* str) {
   string fn(str);
   inFile.open(fn.c_str());
@@ -51,10 +56,11 @@ struct TestCase {
     v[0].toggle();  // v[0] always toggles
     for ( int n = 1; n < N; ++n ) {
       v[n].toggle(); 
-      v[n].power = ( v[n-1].open() ) ? 1 : 0;
+      v[n].power = v[n-1].open();
     }
   }
   string light() {
+    return ( (K+1) % (1<<N) == 0 ) ? "ON" : "OFF";
     for ( int n = 0; n < N; ++n ) {
       if ( v[n].open() ) continue;
       return "OFF";
@@ -70,6 +76,7 @@ int main(int argc, char *argv[]) {
   int nl = -1;
   while ( getline(inFile, line) ) {
     nl++; if (!nl) continue;
+    progress(nl);
     std::stringstream ss(line);
     tc.clear();
     while ( ss >> buf ) {
