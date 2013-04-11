@@ -36,7 +36,7 @@ struct TestCase {
   int N;  // number of snappers
   i64 K;  // number of clicks
   vector<Snapper> v;  // vector of Snappers
-  void print(bool hdr = true) {
+  inline void print(bool hdr = true) {
     if ( !verbose ) return;
     if ( hdr ) cout << "N = " << N << "  K = " << K << endl;
     for ( int n = 0; n < N; ++n ) v[n].print();
@@ -52,7 +52,7 @@ struct TestCase {
       v.push_back(s); v[n].init();
     }
   }
-  void click() {
+  inline void click() {
     v[0].toggle();  // v[0] always toggles
     for ( int n = 1; n < N; ++n ) {
       v[n].toggle(); 
@@ -73,11 +73,12 @@ int main(int argc, char *argv[]) {
   if ( argc < 1 ) return 1;
   initIO(argv[1]);
   string line, buf;
-  int nl = -1;
+  int nl = -1, k;
+  std::stringstream ss;
+  vector<std::ostringstream> rs;
   while ( getline(inFile, line) ) {
     nl++; if (!nl) continue;
-    progress(nl);
-    std::stringstream ss(line);
+    ss.str() = line;
     tc.clear();
     while ( ss >> buf ) {
       if ( tc.ok() ) std::istringstream(buf) >> tc.N;
@@ -85,9 +86,11 @@ int main(int argc, char *argv[]) {
     }
     tc.init();
     tc.print();
-    for ( int k = 0; k < tc.K; ++k ) { tc.click(); tc.print(0); }
+#pragma omp parallel for default(shared) private(tc, k) num_threads(4)
+    for ( k = 0; k < tc.K; ++k ) { tc.click(); tc.print(0); }
     outFile << "Case #" << nl << ": " << tc.light() << endl;
   }
+
   inFile.close();
   outFile.close();
   return 0;
