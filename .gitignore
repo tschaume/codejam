@@ -1,0 +1,4 @@
+cl/config/current_config.py
+cl/.*.swp
+*.pyc
+cl/src
