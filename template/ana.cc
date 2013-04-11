@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   inFile.open(argv[1]);
   std::ofstream outFile;
   string fn = argv[1];
-  fn += ".out";
+  fn.replace(fn.end()-2, fn.end(), "out");
   outFile.open(fn.c_str());
   string line;
   int nl = -1;
